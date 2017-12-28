@@ -7,6 +7,7 @@ https://codereview.stackexchange.com/questions/165215/karatsuba-algorithm-in-pyt
 
 def karatsuba(x, y, base) -> float:
     """
+    Multiply two n-digit number using the Karatsuba algorithm: https://brilliant.org/wiki/karatsuba-algorithm/
     :param x: multiplicand
     :param y: multiplier
     :param base: base that numbers are in: currently only decimal (base-10) values supported
