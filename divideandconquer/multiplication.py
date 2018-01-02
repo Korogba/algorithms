@@ -1,8 +1,4 @@
 # implementation by @kaba_y, https://korogba.github.io
-"""
-ToDo: Modify to use bit string operations: 
-https://codereview.stackexchange.com/questions/165215/karatsuba-algorithm-in-python/165220
-"""
 
 
 def karatsuba(x, y, base) -> float:
