@@ -20,7 +20,7 @@ def partition(input_list, left, right) -> int:
             i += 1
     input_list[left], input_list[i - 1] = input_list[i - 1], input_list[left]
 
-    # ToDo: This if clause seems unnecessary investigate and introduced a subtle bug, why?!!!
+    # ToDo: This if clause seems unnecessary investigate annnnd it introduced a subtle bug :(, why?!!!
     # if i >= right:
     #     return right
     return input_list.index(pivot)

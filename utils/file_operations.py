@@ -1,4 +1,5 @@
 # by @kaba_y, https://korogba.github.io
+from graph_algorithms.graph_definition import Graph
 
 
 def read_file_into_list(file_path) -> list:
@@ -19,3 +20,33 @@ def read_file_into_list(file_path) -> list:
             number_list = list(map(int, number_list))
 
     return number_list
+
+
+def break_up_line_into_dict(line) -> tuple:
+    line_array = line.split()
+    line_array = [int(x) for x in line_array]
+
+    node = line_array[0]
+    neighbors = set(frozenset({x}) for x in line_array[1:])
+
+    return frozenset({node}), neighbors
+
+
+def get_adjacency_list_from_array(lines) -> list:
+    return [break_up_line_into_dict(x) for x in lines]
+
+
+def convert_file_to_graph(file_path) -> dict:
+    """
+    Read the numbers on each line in the file provided and create a dict pair with the first number as the key and
+    successive numbers in a set as value
+    :param file_path: relative/full path to the file containing the list of numbers separated by new lines
+    :return: a dict representing the content of the file as key(vertex):value(set of adjacent vertices) pairs
+    """
+
+    try:
+        lines = [line.rstrip('\n') for line in open(file_path, 'r')]
+        return {node: neighbors for (node, neighbors) in get_adjacency_list_from_array(lines)}
+    except IOError:
+        print('Unable to open file:', file_path)
+        return {}
