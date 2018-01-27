@@ -1,5 +1,4 @@
 # by @kaba_y, https://korogba.github.io
-from graph_algorithms.graph_definition import Graph
 
 
 def read_file_into_list(file_path) -> list:
@@ -22,18 +21,15 @@ def read_file_into_list(file_path) -> list:
     return number_list
 
 
-def break_up_line_into_dict(line) -> tuple:
+def break_up_line_into_arr(line) -> tuple:
     line_array = line.split()
     line_array = [int(x) for x in line_array]
 
-    node = line_array[0]
-    neighbors = set(frozenset({x}) for x in line_array[1:])
-
-    return frozenset({node}), neighbors
+    return frozenset(line_array[:1]), line_array[1:]
 
 
 def get_adjacency_list_from_array(lines) -> list:
-    return [break_up_line_into_dict(x) for x in lines]
+    return [break_up_line_into_arr(x) for x in lines]
 
 
 def convert_file_to_graph(file_path) -> dict:
