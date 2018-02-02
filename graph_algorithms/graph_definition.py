@@ -1,8 +1,9 @@
 # implementation by @kaba_y, https://korogba.github.io
+from bisect import bisect_left
 from random import sample
 
 
-class Graph:
+class GraphAsDict:
     """Representation of a graph as a dict of list"""
 
     def __init__(self, directed, a_list):
@@ -38,3 +39,70 @@ class Graph:
 
         self.contract_edges()
 
+
+class Node:
+    """Representation of vertices of a graph"""
+
+    def __init__(self, value):
+        assert isinstance(value, int)
+
+        self.node_value = value
+        self.edges = []
+        self.in_edges = []
+        self.finishing_time = 0
+        self.visited = False
+        self.parent = None
+        self.leader = None
+
+    def __eq__(self, other) -> bool:
+        return self.node_value == other.node_value
+
+    def __lt__(self, other) -> bool:
+        assert isinstance(other, Node)
+        return self.node_value < other.node_value
+
+    def add_edge(self, edge):
+        self.edges.append(edge)
+
+    def add_edges(self, edge_list):
+        self.edges.extend(edge_list)
+
+
+class GraphAsNodeList:
+    """Representation of a graph as a list of Nodes"""
+
+    def __init__(self):
+        self.node_list = []
+
+    def add_nodes(self, node_list):
+        self.node_list.extend(node_list)
+
+    def add_node(self, node):
+        self.node_list.append(node)
+
+    def find_or_create(self, val) -> Node:
+        new_node = Node(val)
+        index = bisect_left(self.node_list, new_node)
+
+        if index != len(self.node_list) and self.node_list[index] == new_node:
+            return self.node_list[index]
+        else:
+            self.node_list.insert(index, new_node)
+            return new_node
+
+    def append(self, node_value, edge_list):
+        # did a benchmark test and the method below is a tad bit faster than the one commented
+        # self.find_or_create(node_value).edges.append(self.find_or_create(edge_list))
+        neighbors = []
+        new_node = self.find_or_create(node_value)
+        for val in edge_list:
+            neighbor = self.find_or_create(val)
+            neighbor.in_edges.append(new_node)
+            neighbors.append(neighbor)
+        new_node.edges.extend(neighbors)
+
+    def clear(self):
+        for node in self.node_list:
+            node.visited = False
+            node.finishing_time = 0
+            node.parent = None

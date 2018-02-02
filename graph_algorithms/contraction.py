@@ -1,19 +1,19 @@
 # implementation by @kaba_y, https://korogba.github.io
 from math import log
 
-from graph_algorithms.graph_definition import Graph
+from graph_algorithms.graph_definition import GraphAsDict
 from copy import deepcopy
 
 
 def random_contraction(graph_instance) -> float:
-    assert isinstance(graph_instance, Graph)
+    assert isinstance(graph_instance, GraphAsDict)
 
     number_of_trials = int(pow(len(graph_instance.adjacency_list.keys()), 2)
                            * log(len(graph_instance.adjacency_list.keys())))
 
     minimum_cut = float('inf')
 
-    # You might want to use a lower number than n^2 * log(n) for speedy results
+    # You might want to use a lower number than n^2 * log(n) for speedier results
     for unused in range(number_of_trials):
         mutated_graph = deepcopy(graph_instance)
         mutated_graph.contract_edges()
