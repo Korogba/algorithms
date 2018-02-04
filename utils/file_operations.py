@@ -1,7 +1,7 @@
 # by @kaba_y, https://korogba.github.io
 from typing import Optional
 
-from graph_algorithms.graph_definition import GraphAsNodeList
+from graph_algorithms.graph_definition import GraphAsNodeList, DijkstraGraph
 
 
 def read_file_into_list(file_path) -> list:
@@ -97,3 +97,21 @@ def convert_file_to_graph_for_scc(file_path) -> dict:
     except IOError:
         print('Unable to open file:', file_path)
         return {}
+
+
+def convert_file_to_adjacency_list_for_dijkstra(file_path) -> Optional[DijkstraGraph]:
+    """
+    Iterate over the list of, for each line create a node and add the edges
+    """
+
+    try:
+        graph = DijkstraGraph()
+        lines = [line.rstrip('\n') for line in open(file_path, 'r')]
+        for each_line in lines:
+            adjacency_list = each_line.split()
+            node_value = int(adjacency_list[0])
+            [graph.append_weighted_edges(node_value, int(edge), int(weight), False) for edge, weight in (item.split(',') for item in adjacency_list[1:])]
+        return graph
+    except IOError:
+        print('Unable to open file:', file_path)
+        return None

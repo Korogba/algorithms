@@ -106,3 +106,60 @@ class GraphAsNodeList:
             node.visited = False
             node.finishing_time = 0
             node.parent = None
+
+
+class DijkstraNode(Node):
+    """Representation of node with a 'key' property to be used in heaps included"""
+
+    def __init__(self, value):
+        Node.__init__(self, value)
+        self.key = float('inf')
+
+
+class Edge:
+    """Representation of edges of a graph"""
+
+    def __init__(self, head, tail, weight, directed):
+        assert isinstance(head, DijkstraNode)
+        assert isinstance(tail, DijkstraNode)
+        assert isinstance(directed, bool)
+
+        self.head = head
+        self.tail = tail
+        self.weight = weight
+        self.directed = directed
+
+    def __eq__(self, other) -> bool:
+        assert isinstance(other, Edge)
+        if self.directed:
+            return self.head == other.head and self.tail == other.tail
+        else:
+            return (self.head == other.head and self.tail == other.tail) \
+                   or (self.head == other.tail and self.tail == other.head)
+
+    def __lt__(self, other) -> bool:
+        assert isinstance(other, Edge)
+        return self.weight < other.weight
+
+
+class DijkstraGraph:
+    """Representation of a graph as a list of DijkstraNode with Edges"""
+
+    def __init__(self):
+        self.node_list = []
+
+    def find_or_create(self, val) -> DijkstraNode:
+        new_node = DijkstraNode(val)
+        index = bisect_left(self.node_list, new_node)
+
+        if index != len(self.node_list) and self.node_list[index] == new_node:
+            return self.node_list[index]
+        else:
+            self.node_list.insert(index, new_node)
+            return new_node
+
+    def append_weighted_edges(self, node_value, edge_value, weight, directed):
+        node = self.find_or_create(node_value)
+        neighbor = self.find_or_create(edge_value)
+        edge = Edge(node, neighbor, weight, directed)
+        node.edges.append(edge)

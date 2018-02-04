@@ -1,3 +1,4 @@
+# implementation by @kaba_y, https://korogba.github.io
 from graph_algorithms.graph_definition import GraphAsNodeList, Node
 from collections import deque
 from bisect import bisect_left
