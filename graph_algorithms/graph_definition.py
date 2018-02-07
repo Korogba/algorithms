@@ -108,12 +108,24 @@ class GraphAsNodeList:
             node.parent = None
 
 
-class DijkstraNode(Node):
+class DijkstraNode:
     """Representation of node with a 'key' property to be used in heaps included"""
 
     def __init__(self, value):
-        Node.__init__(self, value)
+        assert isinstance(value, int)
+
+        self.node_value = value
+        self.edges = []
+        self.parent = None
+        self.edges = []
         self.key = float('inf')
+
+    def __eq__(self, other) -> bool:
+        return self.node_value == other.node_value
+
+    def __lt__(self, other) -> bool:
+        assert isinstance(other, DijkstraNode)
+        return self.key < other.key
 
 
 class Edge:
@@ -150,9 +162,13 @@ class DijkstraGraph:
 
     def find_or_create(self, val) -> DijkstraNode:
         new_node = DijkstraNode(val)
-        index = bisect_left(self.node_list, new_node)
+
+        # ToDo: Can this be optimized further? Seems 'roundabouty'
+        node_values = [x.node_value for x in self.node_list]
+        index = bisect_left(node_values, val)
 
         if index != len(self.node_list) and self.node_list[index] == new_node:
+            sorted(self.node_list, key=lambda node: node.node_value)
             return self.node_list[index]
         else:
             self.node_list.insert(index, new_node)

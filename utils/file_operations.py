@@ -115,3 +115,15 @@ def convert_file_to_adjacency_list_for_dijkstra(file_path) -> Optional[DijkstraG
     except IOError:
         print('Unable to open file:', file_path)
         return None
+
+
+def convert_file_to_stream_of_numbers(file_path) -> list:
+    """
+    Iterate over the list of, for each line create a node and add the edges
+    """
+
+    try:
+        return [int(line.rstrip('\n')) for line in open(file_path, 'r')]
+    except IOError:
+        print('Unable to open file:', file_path)
+        return []
