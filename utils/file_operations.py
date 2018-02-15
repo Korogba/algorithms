@@ -110,7 +110,8 @@ def convert_file_to_adjacency_list_for_dijkstra(file_path) -> Optional[DijkstraG
         for each_line in lines:
             adjacency_list = each_line.split()
             node_value = int(adjacency_list[0])
-            [graph.append_weighted_edges(node_value, int(edge), int(weight), False) for edge, weight in (item.split(',') for item in adjacency_list[1:])]
+            [graph.append_weighted_edges(node_value, int(edge), int(weight), False)
+             for edge, weight in (item.split(',') for item in adjacency_list[1:])]
         return graph
     except IOError:
         print('Unable to open file:', file_path)
@@ -119,7 +120,7 @@ def convert_file_to_adjacency_list_for_dijkstra(file_path) -> Optional[DijkstraG
 
 def convert_file_to_stream_of_numbers(file_path) -> list:
     """
-    Iterate over the list of, for each line create a node and add the edges
+    Break up file into list of numbers
     """
 
     try:
@@ -127,3 +128,15 @@ def convert_file_to_stream_of_numbers(file_path) -> list:
     except IOError:
         print('Unable to open file:', file_path)
         return []
+
+
+def convert_file_to_dict_of_numbers(file_path) -> set:
+    """
+    Add each number in the file to a set
+    """
+
+    try:
+        return set(int(line.rstrip('\n')) for line in open(file_path, 'r'))
+    except IOError:
+        print('Unable to open file:', file_path)
+        return set()
