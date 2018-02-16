@@ -1,5 +1,4 @@
 .idea
-main.py
 divideandconquer/__pycache__/
 utils/__pycache__/
 .DS_Store
@@ -10,3 +9,5 @@ SCC.txt
 dijkstraData.txt
 Median.txt
 2sum.txt
+jobs.txt
+edges.txt

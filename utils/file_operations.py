@@ -1,7 +1,9 @@
 # by @kaba_y, https://korogba.github.io
+from bisect import bisect_left
 from typing import Optional
 
-from graph_algorithms.graph_definition import GraphAsNodeList, DijkstraGraph
+from graph_algorithms.graph_definition import GraphAsNodeList, DijkstraGraph, PrimGraph
+from greedy_algorithms.job_definition import JobQuotient, JobDifference
 
 
 def read_file_into_list(file_path) -> list:
@@ -140,3 +142,51 @@ def convert_file_to_dict_of_numbers(file_path) -> set:
     except IOError:
         print('Unable to open file:', file_path)
         return set()
+
+
+def convert_file_to_jobs(file_path, is_score_quotient) -> list:
+    """
+    Add each number in the file to a set
+    """
+
+    try:
+        jobs = []
+        lines = [line.rstrip('\n') for line in open(file_path, 'r')]
+        for each_line in lines[1:]:
+            job_values = each_line.split()
+
+            if is_score_quotient:
+                new_job = JobQuotient(int(job_values[0]), int(job_values[1]))
+            else:
+                new_job = JobDifference(int(job_values[0]), int(job_values[1]))
+
+            index = bisect_left(jobs, new_job)
+            jobs.insert(index, new_job)
+
+        return jobs
+    except IOError:
+        print('Unable to open file:', file_path)
+        return []
+
+
+def convert_file_to_adjacency_list_for_prim(file_path) -> Optional[PrimGraph]:
+    """
+    Iterate over the list of, for each line create a node and add the edges
+    Similar to: convert_file_to_adjacency_list_for_dijkstra
+    """
+
+    try:
+        graph = PrimGraph()
+        lines = [line.rstrip('\n') for line in open(file_path, 'r')]
+
+        for each_line in lines[1:]:
+            adjacency_list = each_line.split()
+            node_value = int(adjacency_list[0])
+            neighbor_value = int(adjacency_list[1])
+            weight = int(adjacency_list[2])
+            graph.append_weighted_edges(node_value, neighbor_value, weight, False)
+
+        return graph
+    except IOError:
+        print('Unable to open file:', file_path)
+        return None

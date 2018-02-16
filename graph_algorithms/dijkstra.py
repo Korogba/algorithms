@@ -6,8 +6,9 @@ from utils.file_operations import convert_file_to_adjacency_list_for_dijkstra
 def dijkstra_shortest_path(file_path) -> list:
     """
     Two invariants to maintain: the heap should contain the vertices in the frontier of the search
-    The key of each vertex in the frontier should be the Dijkstra's number of all the edges that have the vertex as head
-    In other words the minimum weight of all the incoming edges
+    The key of each vertex in the frontier is the Dijkstra's number
+    In other words the minimum of the sum of the weight of crossing edge and the Dijkstra's number of the vertex in the
+    visited nodes
     """
     graph = convert_file_to_adjacency_list_for_dijkstra(file_path)
     start_node = graph.node_list[0]

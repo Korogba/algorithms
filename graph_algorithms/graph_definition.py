@@ -163,12 +163,10 @@ class DijkstraGraph:
     def find_or_create(self, val) -> DijkstraNode:
         new_node = DijkstraNode(val)
 
-        # ToDo: Can this be optimized further? Seems 'roundabouty'
         node_values = [x.node_value for x in self.node_list]
         index = bisect_left(node_values, val)
 
         if index != len(self.node_list) and self.node_list[index] == new_node:
-            sorted(self.node_list, key=lambda node: node.node_value)
             return self.node_list[index]
         else:
             self.node_list.insert(index, new_node)
@@ -179,3 +177,23 @@ class DijkstraGraph:
         neighbor = self.find_or_create(edge_value)
         edge = Edge(node, neighbor, weight, directed)
         node.edges.append(edge)
+
+
+class PrimGraph(DijkstraGraph):
+    """
+    Representation of a graph as a list of DijkstraNode with Edges
+    Extends DijkstraGraph to give a different implementation of the append_weighted_edges
+    """
+
+    def __init__(self):
+        super().__init__()
+
+    def append_weighted_edges(self, node_value, edge_value, weight, directed):
+        node = self.find_or_create(node_value)
+        neighbor = self.find_or_create(edge_value)
+
+        edge = Edge(node, neighbor, weight, directed)
+        node.edges.append(edge)
+
+        neighbor_edge = Edge(neighbor, node, weight, directed)
+        neighbor.edges.append(neighbor_edge)
