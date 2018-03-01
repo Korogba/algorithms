@@ -4,6 +4,7 @@ from typing import Optional
 
 from graph_algorithms.graph_definition import GraphAsNodeList, DijkstraGraph, PrimGraph
 from greedy_algorithms.job_definition import JobQuotient, JobDifference
+from greedy_algorithms.kruskal_graph import KruskalGraph, KruskalNode, BitNode
 
 
 def read_file_into_list(file_path) -> list:
@@ -169,7 +170,7 @@ def convert_file_to_jobs(file_path, is_score_quotient) -> list:
         return []
 
 
-def convert_file_to_adjacency_list_for_prim(file_path) -> Optional[PrimGraph]:
+def convert_file_to_prim_graph(file_path) -> Optional[PrimGraph]:
     """
     Iterate over the list of, for each line create a node and add the edges
     Similar to: convert_file_to_adjacency_list_for_dijkstra
@@ -190,3 +191,64 @@ def convert_file_to_adjacency_list_for_prim(file_path) -> Optional[PrimGraph]:
     except IOError:
         print('Unable to open file:', file_path)
         return None
+
+
+def convert_file_to_kruskal_graph(file_path) -> Optional[KruskalGraph]:
+    """
+    Iterate over the list of, for each line create a node and add the edges
+    Similar to: convert_file_to_adjacency_list_for_dijkstra
+    """
+
+    try:
+        graph = KruskalGraph()
+        lines = [line.rstrip('\n') for line in open(file_path, 'r')]
+
+        for each_line in lines[1:]:
+            adjacency_list = each_line.split()
+            node_value = int(adjacency_list[0])
+            neighbor_value = int(adjacency_list[1])
+            weight = int(adjacency_list[2])
+            graph.append_weighted_edges(node_value, neighbor_value, weight)
+
+        return graph
+    except IOError:
+        print('Unable to open file:', file_path)
+        return None
+
+
+def convert_file_to_dict(file_path) -> dict:
+    """
+    Iterate over the list of, for each line create a node and add the edges
+    Similar to: convert_file_to_adjacency_list_for_dijkstra
+    """
+
+    try:
+        lines = [line.rstrip('\n') for line in open(file_path, 'r')]
+        node_list = {}
+        for each_line in lines[1:]:
+            node = BitNode([int(x) for x in each_line.split()])
+            node_list[each_line.strip()] = node
+
+        return node_list
+    except IOError:
+        print('Unable to open file:', file_path)
+        return {}
+
+
+def convert_file_to_list(file_path) -> list:
+    """
+    Iterate over the list of, for each line create a node and add the edges
+    Similar to: convert_file_to_adjacency_list_for_dijkstra
+    """
+
+    try:
+        lines = [line.rstrip('\n') for line in open(file_path, 'r')]
+        node_list = []
+        for each_line in lines[1:]:
+            node = BitNode([int(x) for x in each_line.split()])
+            node_list.append(node)
+
+        return node_list
+    except IOError:
+        print('Unable to open file:', file_path)
+        return []

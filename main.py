@@ -1,7 +1,19 @@
-from greedy_algorithms.prims_algorithm import prims_algorithm
+from multiprocessing import Process
+from greedy_algorithms.clustering import spacing_count_with_hash, k_clustering
 
-mst_cost = prims_algorithm('input_random_65_100000.txt')
-print("Cost of minimum spanning tree is: ", mst_cost)
+clustering_process = Process(target=k_clustering, args=('clustering1.txt', 4))
+count_process = Process(target=spacing_count_with_hash, args=('clustering_big.txt', ))
+clustering_process.start()
+count_process.start()
+
+# kruskal_graph = convert_file_to_kruskal_graph('input_completeRandom_10_32.txt')
+# union_find = UnionFind(kruskal_graph)
+# [print(x.weight, '\t') for x in kruskal_graph.edge_list]
+
+# from greedy_algorithms.prims_algorithm import prims_algorithm
+#
+# mst_cost = prims_algorithm('input_random_65_100000.txt')
+# print("Cost of minimum spanning tree is: ", mst_cost)
 
 # weighted_completion_time_difference = weighted_completion_time('jobs.txt', False)
 #
@@ -159,3 +171,5 @@ print("Cost of minimum spanning tree is: ", mst_cost)
 
 # ToDo: look up optimal branching problem
 
+
+# ToDo: Check out MSTs - State of the Art

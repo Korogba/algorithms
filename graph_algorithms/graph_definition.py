@@ -172,9 +172,9 @@ class DijkstraGraph:
             self.node_list.insert(index, new_node)
             return new_node
 
-    def append_weighted_edges(self, node_value, edge_value, weight, directed):
+    def append_weighted_edges(self, node_value, neighbor_value, weight, directed):
         node = self.find_or_create(node_value)
-        neighbor = self.find_or_create(edge_value)
+        neighbor = self.find_or_create(neighbor_value)
         edge = Edge(node, neighbor, weight, directed)
         node.edges.append(edge)
 
@@ -188,9 +188,9 @@ class PrimGraph(DijkstraGraph):
     def __init__(self):
         super().__init__()
 
-    def append_weighted_edges(self, node_value, edge_value, weight, directed):
+    def append_weighted_edges(self, node_value, neighbor_value, weight, directed):
         node = self.find_or_create(node_value)
-        neighbor = self.find_or_create(edge_value)
+        neighbor = self.find_or_create(neighbor_value)
 
         edge = Edge(node, neighbor, weight, directed)
         node.edges.append(edge)

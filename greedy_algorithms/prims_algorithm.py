@@ -2,7 +2,7 @@
 from random import sample
 
 from graph_algorithms import heap_utils
-from utils.file_operations import convert_file_to_adjacency_list_for_prim
+from utils.file_operations import convert_file_to_prim_graph
 
 
 def cost(minimum_spanning_tree):
@@ -29,7 +29,7 @@ def prims_algorithm(file_path) -> int:
     The key of each vertex in the frontier is the minimum of the weight of all crossing edge of that vertex
     See Dijkstra's shortest path Implementation
     """
-    graph = convert_file_to_adjacency_list_for_prim(file_path)
+    graph = convert_file_to_prim_graph(file_path)
     start_node = sample(graph.node_list, 1)[0]
     start_node.key = 0
     minimum_spanning_tree = []

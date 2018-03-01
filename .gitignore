@@ -11,3 +11,8 @@ Median.txt
 2sum.txt
 jobs.txt
 edges.txt
+clustering1.txt
+clustering_big.txt
+data_structures/__pycache__/
+graph_algorithms/__pycache__/
+greedy_algorithms/__pycache__/
