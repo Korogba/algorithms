@@ -1,10 +1,18 @@
-from multiprocessing import Process
-from greedy_algorithms.clustering import spacing_count_with_hash, k_clustering
+from dynamic_programming.mwis import get_mwis
 
-clustering_process = Process(target=k_clustering, args=('clustering1.txt', 4))
-count_process = Process(target=spacing_count_with_hash, args=('clustering_big.txt', ))
-clustering_process.start()
-count_process.start()
+bits = get_mwis('mwis.txt')
+print(bits)
+# print(s)
+
+# merged_nodes = huffman_algorithm('huffman.txt')
+#
+# print(merged_nodes[0].code_length, ' ', merged_nodes[len(merged_nodes) - 1].code_length)
+
+
+# clustering_process = Process(target=k_clustering, args=('clustering1.txt', 4))
+# count_process = Process(target=spacing_count_with_hash, args=('clustering_big.txt', ))
+# clustering_process.start()
+# count_process.start()
 
 # kruskal_graph = convert_file_to_kruskal_graph('input_completeRandom_10_32.txt')
 # union_find = UnionFind(kruskal_graph)
@@ -171,5 +179,6 @@ count_process.start()
 
 # ToDo: look up optimal branching problem
 
-
 # ToDo: Check out MSTs - State of the Art
+
+# ToDo: Implement Huffman'a algorithm using a two queue's and a sorting????

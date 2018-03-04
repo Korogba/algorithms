@@ -13,6 +13,8 @@ jobs.txt
 edges.txt
 clustering1.txt
 clustering_big.txt
+huffman.txt
+mwis.txt
 data_structures/__pycache__/
 graph_algorithms/__pycache__/
 greedy_algorithms/__pycache__/

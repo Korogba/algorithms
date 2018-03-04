@@ -1,7 +1,7 @@
 # implementation by @kaba_y, https://korogba.github.io
 # clustering algorithms using Kruskal's MST algorithm
 from data_structures.union_find import UnionFind, UnionFindBitNode
-from utils.file_operations import convert_file_to_kruskal_graph, convert_file_to_dict, convert_file_to_list
+from utils.file_operations import convert_file_to_kruskal_graph, convert_file_to_dict
 
 
 # ToDo Write appropriate comment
@@ -25,31 +25,12 @@ def k_clustering(file_path, number_of_clusters) -> int:
             found_max = True
             break
     if not found_max:
+        # todo: sorted statement might have no effect. should assign return?
         sorted(partition_edges)
         max_spacing = partition_edges[0].weight
 
     print('Maximum spacing: ', max_spacing)
     return max_spacing
-
-
-def spacing_count(file_path) -> int:
-    node_list = convert_file_to_list(file_path)
-    parents = set()
-    cluster_count = 0
-
-    for index in range(len(node_list)):
-        node = node_list[index]
-
-        if node.parent not in parents:
-            for search in range(index, len(node_list)):
-                search_node = node_list[search]
-                if node.distance(search_node) < 3:
-                    search_node.parent = node.parent
-
-            parents.add(node.parent)
-            cluster_count += 1
-
-    return cluster_count
 
 
 def get_cluster_nodes(node) -> set:

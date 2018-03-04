@@ -1,7 +1,7 @@
 # implementation by @kaba_y, https://korogba.github.io
 from random import sample
 
-from graph_algorithms import heap_utils
+from data_structures import heap_utils
 from utils.file_operations import convert_file_to_prim_graph
 
 

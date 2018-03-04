@@ -1,10 +1,12 @@
 # by @kaba_y, https://korogba.github.io
 from bisect import bisect_left
+from collections import deque
 from typing import Optional
 
+from data_structures.huffman_node import HuffmanNode
 from graph_algorithms.graph_definition import GraphAsNodeList, DijkstraGraph, PrimGraph
 from greedy_algorithms.job_definition import JobQuotient, JobDifference
-from greedy_algorithms.kruskal_graph import KruskalGraph, KruskalNode, BitNode
+from greedy_algorithms.kruskal_graph import KruskalGraph, BitNode
 
 
 def read_file_into_list(file_path) -> list:
@@ -235,20 +237,40 @@ def convert_file_to_dict(file_path) -> dict:
         return {}
 
 
-def convert_file_to_list(file_path) -> list:
+def convert_file_to_huffman_list(file_path) -> Optional[deque]:
     """
-    Iterate over the list of, for each line create a node and add the edges
-    Similar to: convert_file_to_adjacency_list_for_dijkstra
+    todo: update docs
     """
 
     try:
         lines = [line.rstrip('\n') for line in open(file_path, 'r')]
         node_list = []
         for each_line in lines[1:]:
-            node = BitNode([int(x) for x in each_line.split()])
-            node_list.append(node)
+            huffman_node = HuffmanNode(int(each_line))
+            index = bisect_left(node_list, huffman_node)
+            node_list.insert(index, huffman_node)
+
+        return deque(node_list)
+
+    except IOError:
+        print('Unable to open file:', file_path)
+        return None
+
+
+def convert_file_to_list(file_path) -> []:
+    """
+    todo: update docs
+    """
+
+    try:
+        lines = [line.rstrip('\n') for line in open(file_path, 'r')]
+        node_list = []
+        for each_line in lines[1:]:
+            node_list.append(int(each_line))
 
         return node_list
+
     except IOError:
         print('Unable to open file:', file_path)
         return []
+
