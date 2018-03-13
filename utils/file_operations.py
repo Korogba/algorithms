@@ -274,3 +274,24 @@ def convert_file_to_list(file_path) -> []:
         print('Unable to open file:', file_path)
         return []
 
+
+def convert_file_to_knapsack(file_path) -> tuple:
+    """
+    todo: update docs
+    """
+
+    try:
+        lines = [line.rstrip('\n') for line in open(file_path, 'r')]
+        weight_list = [0]
+        value_list = [0]
+        capacity = int(lines[0].split()[0])
+        for each_line in lines[1:]:
+            line = [int(x) for x in each_line.split()]
+            value_list.append(line[0])
+            weight_list.append(line[1])
+
+        return value_list, weight_list, capacity
+
+    except IOError:
+        print('Unable to open file:', file_path)
+        return tuple()

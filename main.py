@@ -1,7 +1,9 @@
-from dynamic_programming.mwis import get_mwis
+from dynamic_programming.knapsack_problem import knapsack
 
-bits = get_mwis('mwis.txt')
-print(bits)
+print(knapsack('input_random_10_100_10.txt'))
+
+# bits = get_mwis('mwis.txt')
+# print(bits)
 # print(s)
 
 # merged_nodes = huffman_algorithm('huffman.txt')
@@ -182,3 +184,9 @@ print(bits)
 # ToDo: Check out MSTs - State of the Art
 
 # ToDo: Implement Huffman'a algorithm using a two queue's and a sorting????
+
+# ToDo: Implement Sequence Alignment using DP
+
+# ToDo: Implement optimal BST's using DP: Be sure to look up the optimized version that reduces complexity to ^2 from ^3
+
+

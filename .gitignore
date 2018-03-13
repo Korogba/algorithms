@@ -15,6 +15,9 @@ clustering1.txt
 clustering_big.txt
 huffman.txt
 mwis.txt
+knapsack1.txt
+knapsack_big.txt
 data_structures/__pycache__/
 graph_algorithms/__pycache__/
 greedy_algorithms/__pycache__/
+dynamic_programming/__pycache__/
