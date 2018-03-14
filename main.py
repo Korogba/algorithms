@@ -1,6 +1,6 @@
 from dynamic_programming.knapsack_problem import knapsack
 
-print(knapsack('input_random_10_100_10.txt'))
+print(knapsack('knapsack1.txt'))
 
 # bits = get_mwis('mwis.txt')
 # print(bits)

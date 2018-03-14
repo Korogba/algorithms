@@ -275,7 +275,7 @@ def convert_file_to_list(file_path) -> []:
         return []
 
 
-def convert_file_to_knapsack(file_path) -> tuple:
+def convert_file_to_knapsack(file_path) -> Optional[tuple]:
     """
     todo: update docs
     """
@@ -294,4 +294,4 @@ def convert_file_to_knapsack(file_path) -> tuple:
 
     except IOError:
         print('Unable to open file:', file_path)
-        return tuple()
+        return None
