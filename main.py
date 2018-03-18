@@ -1,6 +1,8 @@
-from dynamic_programming.knapsack_problem import knapsack
+# if __name__ == '__main__':
+#     with Pool(5) as p:
+#         print(p.map(floyd_warshall_algorithm, ['g1.txt', 'g2.txt', 'g3.txt']))
 
-print(knapsack('knapsack1.txt'))
+# print(knapsack('knapsack1.txt'))
 
 # bits = get_mwis('mwis.txt')
 # print(bits)
@@ -189,4 +191,14 @@ print(knapsack('knapsack1.txt'))
 
 # ToDo: Implement optimal BST's using DP: Be sure to look up the optimized version that reduces complexity to ^2 from ^3
 
+# ToDo: Implementation of Bellman-Ford using depth-first search and predecessors' to calculate negative cost cycle
 
+# ToDo: Implementation of Floyd-Warshall Algorithm
+
+# ToDo: Implementation of Johnson's all-pair shortest path algorithm
+
+# ToDO: Constraint satisfaction problems: 2 SAT problem, 3 SAT problem
+
+# ToDo: Implement vertex cover problem using dynamic programming for trees
+
+# ToDo: Look up maximum flow problem

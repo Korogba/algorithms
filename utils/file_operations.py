@@ -4,7 +4,7 @@ from collections import deque
 from typing import Optional
 
 from data_structures.huffman_node import HuffmanNode
-from graph_algorithms.graph_definition import GraphAsNodeList, DijkstraGraph, PrimGraph
+from graph_algorithms.graph_definition import GraphAsNodeList, DijkstraGraph, PrimGraph, FloydWarshallGraph
 from greedy_algorithms.job_definition import JobQuotient, JobDifference
 from greedy_algorithms.kruskal_graph import KruskalGraph, BitNode
 
@@ -292,6 +292,24 @@ def convert_file_to_knapsack(file_path) -> Optional[tuple]:
 
         return value_list, weight_list, capacity
 
+    except IOError:
+        print('Unable to open file:', file_path)
+        return None
+
+
+def convert_file_to_floyd_warshall_graph(file_path) -> Optional[FloydWarshallGraph]:
+    """
+    Iterate over the list of, for each line create a node and add the edges
+    """
+
+    try:
+        graph = FloydWarshallGraph()
+        lines = [line.rstrip('\n') for line in open(file_path, 'r')]
+        for each_line in lines[1:]:
+            edge_definition = each_line.split()
+            graph.append_weighted_edges(int(edge_definition[0]),
+                                        int(edge_definition[1]), int(edge_definition[2]), True)
+        return graph
     except IOError:
         print('Unable to open file:', file_path)
         return None

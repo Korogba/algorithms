@@ -117,7 +117,6 @@ class DijkstraNode:
         self.node_value = value
         self.edges = []
         self.parent = None
-        self.edges = []
         self.key = float('inf')
 
     def __eq__(self, other) -> bool:
@@ -197,3 +196,30 @@ class PrimGraph(DijkstraGraph):
 
         neighbor_edge = Edge(neighbor, node, weight, directed)
         neighbor.edges.append(neighbor_edge)
+
+
+class FloydWarshallGraph:
+    """Representation of a graph as a list of DijkstraNodes and Edges"""
+
+    def __init__(self):
+        self.node_list = []
+        self.edge_list = []
+
+    def find_or_create(self, val) -> DijkstraNode:
+        new_node = DijkstraNode(val)
+
+        node_values = [x.node_value for x in self.node_list]
+        index = bisect_left(node_values, val)
+
+        if index != len(self.node_list) and self.node_list[index] == new_node:
+            return self.node_list[index]
+        else:
+            self.node_list.insert(index, new_node)
+            return new_node
+
+    def append_weighted_edges(self, node_value, neighbor_value, weight, directed):
+        node = self.find_or_create(node_value)
+        neighbor = self.find_or_create(neighbor_value)
+        edge = Edge(node, neighbor, weight, directed)
+        self.edge_list.append(edge)
+        node.edges.append(edge)
