@@ -1,3 +1,14 @@
+import timeit
+from np_problems.traveling_salesman import tsp
+
+
+def timing_function():
+    print("Done: ", tsp('tsp.txt'))
+
+
+t = timeit.timeit("timing_function()", setup="from __main__ import timing_function", number=1)
+print("Time taken: ", t)
+
 # if __name__ == '__main__':
 #     with Pool(5) as p:
 #         print(p.map(floyd_warshall_algorithm, ['g1.txt', 'g2.txt', 'g3.txt']))

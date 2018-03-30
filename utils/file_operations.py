@@ -299,7 +299,7 @@ def convert_file_to_knapsack(file_path) -> Optional[tuple]:
 
 def convert_file_to_floyd_warshall_graph(file_path) -> Optional[FloydWarshallGraph]:
     """
-    Iterate over the list of, for each line create a node and add the edges
+    ToDo: Update docs
     """
 
     try:
@@ -313,3 +313,22 @@ def convert_file_to_floyd_warshall_graph(file_path) -> Optional[FloydWarshallGra
     except IOError:
         print('Unable to open file:', file_path)
         return None
+
+
+def convert_file_to_tsp(file_path) -> tuple:
+    """
+    ToDo: Update docs
+    """
+
+    try:
+        cities = []
+        lines = [line.rstrip('\n') for line in open(file_path, 'r')]
+        size = int(lines[0])
+        for each_line in lines[1:]:
+            city = each_line.split()
+            cities.append((float(city[0]), float(city[1])))
+
+        return cities, size
+    except IOError:
+        print('Unable to open file:', file_path)
+        return [], 0
