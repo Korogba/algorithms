@@ -54,12 +54,15 @@ def tsp(file_path) -> int:
                 k_distances = [a[generate_key(j_removed, k)] + get_dist(j, k, cities) for k in k_indices]
                 a[generate_key(each_set, j)] = min(k_distances)
 
-        remove_sets = generate_subsets(cities, (m - 1))
-        for i in range(1, len(cities) + 1):
-            for del_set in remove_sets:
-                del_key = generate_key(del_set, i)
-                if del_key in a:
-                    del a[generate_key(del_set, i)]
+        print("Done with sub-problem size: ", m)
+
+        # ToDO: Find feasible way to prune solutions: this seems to make no difference
+        # remove_sets = generate_subsets(cities, (m - 1))
+        # for i in range(1, len(cities) + 1):
+        #     for del_set in remove_sets:
+        #         del_key = generate_key(del_set, i)
+        #         if del_key in a:
+        #             del a[generate_key(del_set, i)]
 
     penultimate_set = [1 for _ in range(len(cities))]
     return min([a[generate_key(penultimate_set, j)] + get_dist(j, 0, cities) for j in range(1, len(cities))])
@@ -67,26 +70,3 @@ def tsp(file_path) -> int:
 
 def get_dist(j, k, cities):
     return sqrt(pow(cities[j][0] - cities[k][0], 2) + pow(cities[j][1] - cities[k][1], 2))
-
-
-# def copied_tsp(file_path):
-#     cities, size = convert_file_to_tsp(file_path)
-#     # INFINITY and n are defined somewhere above.
-#     A = [[float('Inf') for i in range(size)] for j in range(2 ** size)]
-#     A[1][1] = 0
-#     # Iterate over all subsets:
-#     subsets = range(1, 2 ** size)
-#     for subset in sorted(subsets, key=lambda x: bin(x).count('1')):
-#         if not subset & 1:
-#             # City #1 is not presented.
-#             continue
-#         for j in range(2, size + 1):
-#             if not (1 << (j - 1)) & subset:
-#                 # City #j is not presented.
-#                 continue
-#             for k in range(1, size + 1):
-#                 if k == j or not (1 << (k - 1)) & subset:
-#                     continue
-#                 A[subset][j] = min(A[subset][j], A[subset ^ (1 << (j - 1))][k] + get_dist(j, k, cities))
-#
-#     return A

@@ -2,6 +2,8 @@ import timeit
 from np_problems.traveling_salesman import tsp
 
 
+# Solution is: 26442.73030895475
+# Time taken to run: 29362.99019825796
 def timing_function():
     print("Done: ", tsp('tsp.txt'))
 
