@@ -1,15 +1,22 @@
 import timeit
-from np_problems.traveling_salesman import tsp
+from np_problems.tsp_heuristic import tsp_with_nearest_distance_heuristics
 
 
-# Solution is: 26442.73030895475
-# Time taken to run: 29362.99019825796
 def timing_function():
-    print("Done: ", tsp('tsp.txt'))
+    print("Done: ", tsp_with_nearest_distance_heuristics('nn.txt'))
 
 
 t = timeit.timeit("timing_function()", setup="from __main__ import timing_function", number=1)
 print("Time taken: ", t)
+
+# Solution is: 26442.73030895475
+# Time taken to run: 29362.99019825796
+# def timing_function():
+#     print("Done: ", tsp('tsp.txt'))
+#
+#
+# t = timeit.timeit("timing_function()", setup="from __main__ import timing_function", number=1)
+# print("Time taken: ", t)
 
 # if __name__ == '__main__':
 #     with Pool(5) as p:
@@ -215,3 +222,22 @@ print("Time taken: ", t)
 # ToDo: Implement vertex cover problem using dynamic programming for trees
 
 # ToDo: Look up maximum flow problem
+
+# ToDo: Implement maximum cut problem
+
+# ToDo: Random walks on non-negative integers: checkout!
+
+# Both algorithms below are examples of Linear Programming: Optimization of linear functions over
+# the intersection half-spaces: Simplex method, Convex programming? Integer Programming?
+# ToDo: Stable matching: Gale-Shapley Proposal Algorithm!
+
+# ToDo: Bi-partite matching reduces to maximum flow problem
+
+# ToDo: Geometric problems: e.g closest pair problem. Convex-Hull problem
+
+# ToDo: Bounded memory: streaming algorithms
+
+# ToDo: Exploiting parallelism: map reduce & hadoop
+
+
+

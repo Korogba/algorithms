@@ -332,3 +332,59 @@ def convert_file_to_tsp(file_path) -> tuple:
     except IOError:
         print('Unable to open file:', file_path)
         return [], 0
+
+
+def convert_file_to_tsp_heuristics(file_path) -> tuple:
+    """
+    ToDo: Update docs
+    """
+
+    try:
+        cities = []
+        lines = [line.rstrip('\n') for line in open(file_path, 'r')]
+        size = int(lines[0])
+        for each_line in lines[1:]:
+            city = each_line.split()
+            cities.append((float(city[1]), float(city[2])))
+
+        return cities, size
+    except IOError:
+        print('Unable to open file:', file_path)
+        return [], 0
+
+
+def convert_file_to_two_sat(file_path) -> tuple:
+    """
+    ToDo: Update docs
+    """
+
+    try:
+        clauses = []
+        lines = [line.rstrip('\n') for line in open(file_path, 'r')]
+        variables = []
+        for each_line in lines[1:]:
+            clause = each_line.split()
+
+            left_var = int(clause[0])
+            right_var = int(clause[1])
+
+            clauses.append((left_var, right_var))
+
+            left_var = max(left_var, (-1 * left_var))
+            left_idx = bisect_left(variables, left_var)
+            if left_idx != len(variables) and variables[left_idx] == left_var:
+                pass
+            else:
+                variables.insert(left_idx, left_var)
+
+            right_var = max(left_var, (-1 * right_var))
+            right_idx = bisect_left(variables, right_var)
+            if right_idx != len(variables) and variables[right_idx] == right_var:
+                pass
+            else:
+                variables.insert(right_idx, right_var)
+
+        return clauses, variables
+    except IOError:
+        print('Unable to open file:', file_path)
+        return [], []
