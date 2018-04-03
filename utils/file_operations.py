@@ -359,32 +359,38 @@ def convert_file_to_two_sat(file_path) -> tuple:
     """
 
     try:
-        clauses = []
+        clauses = {}
         lines = [line.rstrip('\n') for line in open(file_path, 'r')]
         variables = []
+        positive_set = set()
+        negative_set = set()
         for each_line in lines[1:]:
             clause = each_line.split()
 
             left_var = int(clause[0])
             right_var = int(clause[1])
 
-            clauses.append((left_var, right_var))
+            clauses[(left_var, right_var)] = (left_var, right_var)
 
+            if left_var < 0:
+                negative_set.add(-1 * left_var)
+            else:
+                positive_set.add(left_var)
             left_var = max(left_var, (-1 * left_var))
             left_idx = bisect_left(variables, left_var)
-            if left_idx != len(variables) and variables[left_idx] == left_var:
-                pass
-            else:
+            if not (left_idx != len(variables) and variables[left_idx] == left_var):
                 variables.insert(left_idx, left_var)
 
-            right_var = max(left_var, (-1 * right_var))
-            right_idx = bisect_left(variables, right_var)
-            if right_idx != len(variables) and variables[right_idx] == right_var:
-                pass
+            if right_var < 0:
+                negative_set.add(-1 * right_var)
             else:
+                positive_set.add(right_var)
+            right_var = max(right_var, (-1 * right_var))
+            right_idx = bisect_left(variables, right_var)
+            if not (right_idx != len(variables) and variables[right_idx] == right_var):
                 variables.insert(right_idx, right_var)
 
-        return clauses, variables
+        return clauses, variables, positive_set, negative_set
     except IOError:
         print('Unable to open file:', file_path)
         return [], []

@@ -1,6 +1,5 @@
 # implementation by @kaba_y, https://korogba.github.io
 from math import sqrt
-from copy import deepcopy
 from utils.file_operations import convert_file_to_tsp_heuristics
 
 
@@ -8,12 +7,14 @@ def get_dist(j, k, cities):
     return sqrt(pow(cities[j][0] - cities[k][0], 2) + pow(cities[j][1] - cities[k][1], 2))
 
 
+# Not used because used in get_all_distances(cities, size)
 def get_key(i, j, n):
     key_bits = [1 if x == i or x == j else 0 for x in range(n)]
     key = int("".join(str(bit) for bit in key_bits), 2)
     return key
 
 
+# Not used because boy! did it slow down the algorithm! Estimated time for completion was 24 hours ? ¯\_(ツ)_/¯
 def get_all_distances(cities, size) -> dict:
     distances = {}
     for i in range(size):
@@ -24,30 +25,32 @@ def get_all_distances(cities, size) -> dict:
     return distances
 
 
+def get_closest_neighbor(i, visited_indices, cities) -> tuple:
+    min_distance = float('inf')
+    closest_neighbor_idx = -1
+    for j in range(len(cities)):
+        if j not in visited_indices:
+            distance = get_dist(i, j, cities)
+            if distance < min_distance:
+                min_distance = distance
+                closest_neighbor_idx = j
+
+    return closest_neighbor_idx, min_distance
+
+
 def tsp_with_nearest_distance_heuristics(file_path) -> int:
     cities, size = convert_file_to_tsp_heuristics(file_path)
-    # distances = get_all_distances(cities, size)
-    # print("Done with distances!")
-    working_copy = deepcopy(cities)
     tsp_cost = 0
     i = 0
-    while working_copy:
-        city = working_copy.pop(i)
-        city_idx = cities.index(city)
-        min_distance = float('inf')
-        if working_copy:
-            for j in range(len(working_copy)):
-                neighbor_idx = cities.index(working_copy[j])
-                # distance = distances[get_key(city_idx, neighbor_idx, size)]
-                distance = get_dist(city_idx, neighbor_idx, cities)
-                if distance < min_distance:
-                    min_distance = distance
-                    i = j
-        else:
-            # min_distance = distances[get_key(city_idx, 0, size)]
-            min_distance = get_dist(city_idx, 0, cities)
+    visited_indices = set()
 
+    for _ in range(len(cities)):
+        visited_indices.add(i)
+        if len(visited_indices) == len(cities):
+            break
+        i, min_distance = get_closest_neighbor(i, visited_indices, cities)
         tsp_cost += min_distance
-        print("Current city size: ", len(working_copy))
+
+    tsp_cost += get_dist(i, 0, cities)
 
     return tsp_cost

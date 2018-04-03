@@ -1,13 +1,17 @@
-import timeit
-from np_problems.tsp_heuristic import tsp_with_nearest_distance_heuristics
+from multiprocessing.pool import Pool
+from constraint_satisfaction.two_sat import papadimitriou
 
+if __name__ == '__main__':
+    sat_list = ['2sat1.txt', '2sat2.txt', '2sat3.txt', '2sat4.txt', '2sat5.txt', '2sat6.txt']
+    with Pool(4) as p:
+        print(p.map(papadimitriou, sat_list))
 
-def timing_function():
-    print("Done: ", tsp_with_nearest_distance_heuristics('nn.txt'))
-
-
-t = timeit.timeit("timing_function()", setup="from __main__ import timing_function", number=1)
-print("Time taken: ", t)
+# def timing_function():
+#     print("Done: ", tsp_with_nearest_distance_heuristics('nn.txt'))
+#
+#
+# t = timeit.timeit("timing_function()", setup="from __main__ import timing_function", number=1)
+# print("Time taken: ", t)
 
 # Solution is: 26442.73030895475
 # Time taken to run: 29362.99019825796
@@ -238,6 +242,3 @@ print("Time taken: ", t)
 # ToDo: Bounded memory: streaming algorithms
 
 # ToDo: Exploiting parallelism: map reduce & hadoop
-
-
-
